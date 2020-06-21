@@ -47,10 +47,6 @@ func main() {
 	infrastructure.Handle()
 	// p := &Page{Title: "test", Body: []byte("this is test page")}
 	// p.save()
-	sum := Average(5900, 8000)
-
-	fmt.Println(sum)
-
 	http.HandleFunc("/view/", viewHandler)
 	http.HandleFunc("/", topHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
