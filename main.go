@@ -4,7 +4,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
+	"strconv"
+	"time"
+
+	"github.com/andmorefine/golang-template/infrastructure"
 )
 
 type Page struct {
@@ -31,8 +36,15 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 	p, _ := loadPage(title)
 	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
 }
+func topHandler(w http.ResponseWriter, r *http.Request) {
+	rand.Seed(time.Now().UnixNano())
+	sum := Average(10000, rand.Intn(10000))
+	body := strconv.Itoa(sum)
+	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", "Top", body)
+}
 
 func main() {
+	infrastructure.Handle()
 	// p := &Page{Title: "test", Body: []byte("this is test page")}
 	// p.save()
 	sum := Average(5900, 8000)
@@ -40,5 +52,6 @@ func main() {
 	fmt.Println(sum)
 
 	http.HandleFunc("/view/", viewHandler)
+	http.HandleFunc("/", topHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
