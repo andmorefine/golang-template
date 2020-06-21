@@ -35,6 +35,9 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	// p := &Page{Title: "test", Body: []byte("this is test page")}
 	// p.save()
+	sum := Average(5900, 8000)
+
+	fmt.Println(sum)
 
 	http.HandleFunc("/view/", viewHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
